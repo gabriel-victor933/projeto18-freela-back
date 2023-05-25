@@ -5,5 +5,7 @@ export const signUp = Joi.object({
     email: Joi.string().max(50).email().required(),
     username: Joi.string().max(50).required(),
     password: Joi.string().required(),
-    biography: Joi.string()
+    confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
+    biography: Joi.string(),
+    photo: Joi.string().pattern(/^(https?|ftp):\/\/.*\.(jpeg|jpg|png|gif|bmp)$/).empty("")
 })
