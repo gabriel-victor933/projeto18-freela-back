@@ -1,4 +1,5 @@
 import { signUp } from "../schemas/signUp.schema.js"
+import { signIn } from "../schemas/signIn.schema.js"
 import { db } from "../dbs/connectDb.js"
 
 export function validateSignUp(req,res,next){
@@ -20,6 +21,18 @@ export async function verifyUser(req,res,next){
     
     if(user.rowCount !== 0){
         return user.rows[0].email === req.body.email ? res.status(422).send("email já cadastrado") : res.status(422).send("username em uso")
+    }
+
+    next()
+}
+
+export function validateLogin(req,res,next){
+
+    const {error } = signIn.validate(req.body,{abortEarly: false})
+
+    if(error) {
+        const message = error.details.map((detail)=> detail.message)
+        return res.status(422).send(message)
     }
 
     next()
