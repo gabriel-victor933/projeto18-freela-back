@@ -8,7 +8,7 @@ export function validateSignUp(req,res,next){
 
     if(error) {
         const message = error.details.map((detail)=> detail.message)
-        return res.status(422).send(message)
+        return res.status(422).send({errorType: "cadastro", message: message})
     }
 
     next()
@@ -20,7 +20,10 @@ export async function verifyUser(req,res,next){
     const user = await db.query("SELECT users.email,users.username FROM users WHERE users.email = $1 OR users.username = $2",[req.body.email,req.body.username])
     
     if(user.rowCount !== 0){
-        return user.rows[0].email === req.body.email ? res.status(422).send("email já cadastrado") : res.status(422).send("username em uso")
+        const emailError = {errorType: "email", message: "email já cadastrado"}
+        const userNameError = {errorType: "username", message: "username em uso"}
+
+        return user.rows[0].email === req.body.email ? res.status(422).send(emailError) : res.status(422).send(userNameError)
     }
 
     next()
@@ -32,7 +35,7 @@ export function validateLogin(req,res,next){
 
     if(error) {
         const message = error.details.map((detail)=> detail.message)
-        return res.status(422).send(message)
+        return res.status(422).send({errorType: "cadastro", message: message})
     }
 
     next()
