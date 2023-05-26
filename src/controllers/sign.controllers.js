@@ -1,5 +1,6 @@
 import { postUserRepository, getUserByUsernameOrEmail } from "../repository/sign.repository.js"
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 export async function postUser(req,res){
 
@@ -25,8 +26,12 @@ export async function postLogin(req,res){
 
         if(!bcrypt.compareSync(req.body.password, user.rows[0].password)) return res.status(401).send("email/senha inválido")
        
-        //gerar e retornar token de autenticação
-        return res.send("OK")
+
+        const {username, createdat} = user.rows[0]
+
+        const acessToken = jwt.sign({username, createdat},process.env.ACCESS_TOKEN_SECRET)
+        
+        return res.send({token: acessToken})
     } catch(err){
         return res.status(500).send(err)
     }
