@@ -10,6 +10,11 @@ export function getUsersRepository(username, offset){
      OFFSET COALESCE($2,0) LIMIT 15 `,[`${username}%`,offset])
 }
 
-export function getUserByIdRepository(id){
-    return db.query(`SELECT id, username, photo, biography FROM users WHERE users.id = $1`,[id])
+export function getUserByIdRepository(findId,userId){
+    return db.query(`SELECT users.id,users.username,users.biography,users.photo,
+    (SELECT COUNT(follows.id) AS seguindo FROM follows WHERE follows.userid = $1),
+    (SELECT COUNT(follows.id) AS seguidores FROM follows WHERE follows.followid = $1),
+    (SELECT COUNT(follows.id) AS isfollowing FROM follows WHERE follows.followid = $1 AND follows.userid = $2)
+    FROM users
+    WHERE users.id = $1;`,[findId,userId])
 }

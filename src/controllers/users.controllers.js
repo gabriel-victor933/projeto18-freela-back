@@ -36,11 +36,10 @@ export async function getUserById(req,res){
 
         if(!parseInt(req.params.id)) return res.status(400).send("invalid id")
 
-        const user = await getUserByIdRepository(parseInt(req.params.id))
+        
+        const user = await getUserByIdRepository(parseInt(req.params.id),req.userId)
 
         if(user.rowCount === 0) return res.status(404).send("user not Found!")
-
-
 
         return res.send(user.rows[0])
 
