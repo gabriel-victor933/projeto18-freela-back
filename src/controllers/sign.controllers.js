@@ -14,7 +14,7 @@ export async function postUser(req,res){
         return res.sendStatus(201)
 
     } catch(err){
-        return res.sendStatus(500)
+        return res.status(500).send(err.detail)
     }    
 }
 
@@ -33,6 +33,6 @@ export async function postLogin(req,res){
         
         return res.send({token: acessToken})
     } catch(err){
-        return res.status(500).send(err)
+        return res.status(500).send(err.detail)
     }
 }
