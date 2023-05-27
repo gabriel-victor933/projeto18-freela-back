@@ -9,6 +9,7 @@ export async function authenticateToken(req,res,next){
         if(err) return res.sendStatus(403)
         
         req.userId = data.id
+        req.userName = data.username
         next()
     })
 

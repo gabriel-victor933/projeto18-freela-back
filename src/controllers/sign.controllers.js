@@ -1,4 +1,5 @@
-import { postUserRepository, getUserByUsernameOrEmail } from "../repository/sign.repository.js"
+import { postUserRepository } from "../repository/sign.repository.js"
+import {getUserByUsernameOrEmail} from "../repository/users.repository.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
