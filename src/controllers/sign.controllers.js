@@ -27,9 +27,9 @@ export async function postLogin(req,res){
         if(!bcrypt.compareSync(req.body.password, user.rows[0].password)) return res.status(401).send({errorType: "password", message: "email/senha inválido"})
        
 
-        const {username, createdat} = user.rows[0]
+        const {username, createdat, id} = user.rows[0]
 
-        const acessToken = jwt.sign({username, createdat},process.env.ACCESS_TOKEN_SECRET, {expiresIn: "60s"})
+        const acessToken = jwt.sign({username, createdat, id},process.env.ACCESS_TOKEN_SECRET)
         
         return res.send({token: acessToken})
     } catch(err){

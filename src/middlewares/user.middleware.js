@@ -8,7 +8,7 @@ export async function authenticateToken(req,res,next){
     jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,data)=>{
         if(err) return res.sendStatus(403)
         
-        req.user = data.username
+        req.userId = data.id
         next()
     })
 
