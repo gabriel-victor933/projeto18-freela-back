@@ -5,6 +5,6 @@ export function getUserByUsernameOrEmail(locator){
 }
 
 export function getUsersRepository(username, offset){
-    return db.query(`SELECT users.id, users.username, users.photo FROM users WHERE users.username LIKE $1
+    return db.query(`SELECT users.id, users.username, users.photo FROM users WHERE users.username ILIKE $1
      OFFSET COALESCE($2,0) LIMIT 15`,[`${username}%`,offset])
 }
