@@ -14,3 +14,8 @@ export function postFollowRepository(userId,followId){
         throw new Error(`Ocorreu um erro: ${error.message}`);
       })
 }
+
+export function deleteFollowRepository(userId,followId){
+    return db.query(`DELETE FROM follows WHERE follows.userid = $1 AND
+    follows.followid = $2`,[userId,followId])
+}
