@@ -4,10 +4,11 @@ export function getUserByUsernameOrEmail(locator){
     return db.query(`SELECT * FROM users WHERE users.email = $1 OR users.username = $1`,[locator])
 }
 
-export function getUsersRepository(username, offset){
+export function getUsersRepository(search, offset,userName){
     return db.query(`SELECT users.id, users.username, users.photo FROM users WHERE users.username ILIKE $1
+    AND users.username <> $2
     ORDER BY users.username ASC
-     OFFSET COALESCE($2,0) LIMIT 15 `,[`${username}%`,offset])
+    OFFSET COALESCE($3,0) LIMIT 15 `,[`${search}%`,userName,offset])
 }
 
 export function getUserByIdRepository(findId,userId){

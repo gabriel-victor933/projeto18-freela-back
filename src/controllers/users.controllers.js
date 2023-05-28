@@ -20,7 +20,7 @@ export async function getUsers(req,res){
         const page = ((req.query.page - 1)*15 || null)
         
 
-        const users = await getUsersRepository(search,page)
+        const users = await getUsersRepository(search,page,req.userName)
         
         return res.status(200).send(users.rows)
 
