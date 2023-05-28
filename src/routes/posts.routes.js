@@ -7,4 +7,6 @@ const route = Router()
 
 route.post("/post",authenticateToken,validatePost,insertPost)
 
+route.get("/post/:id",authenticateToken,getPostById)
+
 export default route

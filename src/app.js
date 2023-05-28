@@ -7,6 +7,7 @@ import postsRoute from "./routes/posts.routes.js"
 import usersRoute from "./routes/users.routes.js"
 import followsRoute from "./routes/follows.routes.js"
 import meRoute from "./routes/me.routes.js"
+import likeRoute from "./routes/likes.router.js"
 
 dotenv.config()
 
@@ -19,6 +20,7 @@ app.use(postsRoute)
 app.use(usersRoute)
 app.use(followsRoute)
 app.use(meRoute)
+app.use(likeRoute)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT,()=>console.log(`server running in port ${PORT}`))
