@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authenticateToken } from "../middlewares/users.middleware.js";
+import { authenticateToken } from "../middlewares/me.middleware.js";
 import {postFollow, deleteFollow} from "../controllers/follows.controllers.js"
 
 const route = Router()
