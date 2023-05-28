@@ -5,6 +5,7 @@ import { db } from "./dbs/connectDb.js";
 import signRoute from "./routes/sign.routes.js"
 import postsRoute from "./routes/posts.routes.js"
 import usersRoute from "./routes/users.routes.js"
+import followsRoute from "./routes/follows.routes.js"
 
 dotenv.config()
 
@@ -15,7 +16,7 @@ app.use(cors())
 app.use(signRoute)
 app.use(postsRoute)
 app.use(usersRoute)
-
+app.use(followsRoute)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT,()=>console.log(`server running in port ${PORT}`))
