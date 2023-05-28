@@ -16,3 +16,11 @@ export function getPostsByUserId(id,offset,userId){
     ORDER BY posts.createdat DESC
     OFFSET COALESCE($2,0) LIMIT 15 `,[id,offset,userId])
 }
+
+export function getPostByIdRepository(id,userId){
+    return db.query(`SELECT posts.*,
+    (SELECT COUNT(likes.id) AS like FROM likes WHERE likes.postid = posts.id ),
+    (SELECT COUNT(comments.id) AS comment FROM comments WHERE comments.postid = posts.id ),
+    (SELECT COUNT(likes.id) AS isliked FROM likes WHERE likes.userid = $2 AND likes.postid = posts.id ) 
+    FROM posts WHERE posts.id = $1`,[id,userId])
+}

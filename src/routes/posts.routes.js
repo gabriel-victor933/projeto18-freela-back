@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authenticateToken } from "../middlewares/me.middleware.js";
 import { validatePost } from "../middlewares/posts.middleware.js";
-import { insertPost } from "../controllers/posts.controllers.js";
+import { insertPost, getPostById } from "../controllers/posts.controllers.js";
 
 const route = Router()
 
