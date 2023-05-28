@@ -1,4 +1,4 @@
-import {getUserByIdRepository, getUserByUsernameOrEmail, getUsersRepository} from "../repository/users.repository.js"
+import {getUserByIdRepository, getUserByUsernameOrEmail, getUsersRepository, editMyUserRepository} from "../repository/users.repository.js"
 
 export async function getUser(req,res){
 
@@ -55,6 +55,20 @@ export async function getMyUser(req,res){
         const user = await getUserByIdRepository(req.userId,req.userId)
         if(user.rowCount === 0) return res.status(404).send("user not Found!")
         return res.send(user.rows[0])
+
+    } catch(err){
+        console.log(err)
+        return res.status(500).send(err.detail)
+    }
+}
+
+export async function editMyUser(req,res){
+
+    try{
+
+        const {name,photo,biography} = req.body
+        await editMyUserRepository(name,photo,biography,req.userId)
+        return res.sendStatus(202)
 
     } catch(err){
         console.log(err)

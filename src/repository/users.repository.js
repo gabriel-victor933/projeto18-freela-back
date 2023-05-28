@@ -18,3 +18,8 @@ export function getUserByIdRepository(findId,userId){
     FROM users
     WHERE users.id = $1;`,[findId,userId])
 }
+
+export function editMyUserRepository(name,photo,biography,id){
+    return db.query(`UPDATE users SET  name = $1, photo = $2, biography = $3
+    WHERE users.id = $4`,[name,photo,biography,id])
+}
