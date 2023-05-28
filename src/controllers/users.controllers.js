@@ -1,5 +1,5 @@
 import {getUserByIdRepository, getUserByUsernameOrEmail, getUsersRepository, editMyUserRepository,deleteMyUserRepository} from "../repository/users.repository.js"
-
+import {getPostsByUserId} from "../repository/posts.repository.js"
 
 export async function getUser(req,res){
 
@@ -83,6 +83,22 @@ export async function deleteUser(req,res){
         const result = await deleteMyUserRepository(req.userId)
         
         return res.sendStatus(200)
+    } catch(err){
+        console.log(err)
+        return res.status(500).send(err.detail)
+    }
+}
+
+export async function getMyPosts(req,res){
+
+    try{
+
+        const page = ((req.query.page - 1)*15 || null)
+
+        const posts = await getPostsByUserId(req.userId,page)
+
+        
+        return res.send(posts.rows)
     } catch(err){
         console.log(err)
         return res.status(500).send(err.detail)
