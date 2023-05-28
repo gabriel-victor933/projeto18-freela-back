@@ -1,4 +1,5 @@
-import {getUserByIdRepository, getUserByUsernameOrEmail, getUsersRepository} from "../repository/users.repository.js"
+import {getUserByIdRepository, getUsersRepository} from "../repository/users.repository.js"
+import {getPostsByUserId} from "../repository/posts.repository.js"
 
 export async function getUsers(req,res){
 
@@ -29,6 +30,25 @@ export async function getUserById(req,res){
         if(user.rowCount === 0) return res.status(404).send("user not Found!")
 
         return res.send(user.rows[0])
+
+    } catch(err){
+        console.log(err)
+        return res.status(500).send(err.detail)
+    }
+}
+
+export async function getUserPostById(req,res){
+
+    try {
+
+        const id = parseInt(req.params.id)
+        const page = ((req.query.page - 1)*15 || null)
+
+        if(!id) return res.status(400).send("invalid id")
+
+        const posts = await getPostsByUserId(id,page)
+
+        return res.send(posts.rows)
 
     } catch(err){
         console.log(err)
