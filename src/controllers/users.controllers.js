@@ -46,7 +46,7 @@ export async function getUserPostById(req,res){
 
         if(!id) return res.status(400).send("invalid id")
 
-        const posts = await getPostsByUserId(id,page)
+        const posts = await getPostsByUserId(id,page,req.userId)
 
         return res.send(posts.rows)
 

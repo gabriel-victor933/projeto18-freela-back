@@ -60,7 +60,8 @@ export async function getMyPosts(req,res){
 
         const page = ((req.query.page - 1)*15 || null)
 
-        const posts = await getPostsByUserId(req.userId,page)
+
+        const posts = await getPostsByUserId(req.userId,page,req.userId)
 
         
         return res.send(posts.rows)
