@@ -1,6 +1,6 @@
 import {getUserByIdRepository, getUserByUsernameOrEmail} from "../repository/users.repository.js"
 import {getPostsByUserId} from "../repository/posts.repository.js"
-import {editMyUserRepository,deleteMyUserRepository} from "../repository/me.repository.js"
+import {editMyUserRepository,deleteMyUserRepository, getMyFeedRepository} from "../repository/me.repository.js"
 
 
 export async function getUser(req,res){
@@ -76,7 +76,11 @@ export async function getMyFeedPost(req,res){
 
     try {
 
-        return res.send("ok")
+        const page = ((req.query.page - 1)*15 || null)
+        
+        const posts = await getMyFeedRepository(req.userId,page)
+
+        return res.send(posts.rows)
 
     } catch(err){
         console.log(err)
