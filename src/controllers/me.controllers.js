@@ -1,5 +1,6 @@
-import {getUserByIdRepository, getUserByUsernameOrEmail, editMyUserRepository,deleteMyUserRepository} from "../repository/users.repository.js"
+import {getUserByIdRepository, getUserByUsernameOrEmail} from "../repository/users.repository.js"
 import {getPostsByUserId} from "../repository/posts.repository.js"
+import {editMyUserRepository,deleteMyUserRepository} from "../repository/me.repository.js"
 
 
 export async function getUser(req,res){
@@ -68,5 +69,17 @@ export async function getMyPosts(req,res){
     } catch(err){
         console.log(err)
         return res.status(500).send(err.detail)
+    }
+}
+
+export async function getMyFeedPost(req,res){
+
+    try {
+
+        return res.send("ok")
+
+    } catch(err){
+        console.log(err)
+        return res.status(500).send(err)
     }
 }
