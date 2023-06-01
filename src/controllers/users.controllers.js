@@ -5,7 +5,16 @@ export async function getUsers(req,res){
 
     try {
         const search = (req.query.search || null)
-        const page = ((req.query.page - 1)*15 || null)
+        let page = 0
+        if(req.query.page){
+
+            if(!parseInt(req.query.page)) return res.status(400).send("invalid URL request")
+
+            page = (req.query.page - 1)*15
+            
+        } else {
+            page = null
+        }
         
 
         const users = await getUsersRepository(search,page,req.userName)
@@ -42,7 +51,16 @@ export async function getUserPostById(req,res){
     try {
 
         const id = parseInt(req.params.id)
-        const page = ((req.query.page - 1)*15 || null)
+        let page = 0
+        if(req.query.page){
+
+            if(!parseInt(req.query.page)) return res.status(400).send("invalid URL request")
+
+            page = (req.query.page - 1)*15
+            
+        } else {
+            page = null
+        }
 
         if(!id) return res.status(400).send("invalid id")
 

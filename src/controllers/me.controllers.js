@@ -59,8 +59,16 @@ export async function getMyPosts(req,res){
 
     try{
 
-        const page = ((req.query.page - 1)*15 || null)
+        let page = 0
+        if(req.query.page){
 
+            if(!parseInt(req.query.page)) return res.status(400).send("invalid URL request")
+
+            page = (req.query.page - 1)*15
+            
+        } else {
+            page = null
+        }
 
         const posts = await getPostsByUserId(req.userId,page,req.userId)
 
@@ -76,7 +84,16 @@ export async function getMyFeedPost(req,res){
 
     try {
 
-        const page = ((req.query.page - 1)*15 || null)
+        let page = 0
+        if(req.query.page){
+
+            if(!parseInt(req.query.page)) return res.status(400).send("invalid URL request")
+
+            page = (req.query.page - 1)*15
+            
+        } else {
+            page = null
+        }
         
         const posts = await getMyFeedRepository(req.userId,page)
 
